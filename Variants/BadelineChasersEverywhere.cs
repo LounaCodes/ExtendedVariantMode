@@ -7,6 +7,7 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Monocle;
 using MonoMod.Cil;
+using MonoMod.RuntimeDetour;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace ExtendedVariants.Variants {
     public class BadelineChasersEverywhere : AbstractExtendedVariant {
 
         public static bool UsingWatchtower { get; private set; } = false;
+
+        private static ILHook addedHook;
 
         private static bool delaysAreLockedIn = false;
         private static float lastChaserLag = 0f;
@@ -31,7 +34,6 @@ namespace ExtendedVariants.Variants {
             IL.Celeste.BadelineOldsite.ctor_Vector2_int += modBadelineOldsiteConstructor;
             On.Celeste.Level.LoadLevel += modLoadLevel;
             On.Celeste.Level.TransitionRoutine += modTransitionRoutine;
-            IL.Celeste.BadelineOldsite.Added += modBadelineOldsiteAdded;
             IL.Celeste.BadelineOldsite.CanChangeMusic += modBadelineOldsiteCanChangeMusic;
             On.Celeste.BadelineOldsite.IsChaseEnd += modBadelineOldsiteIsChaseEnd;
             IL.Celeste.Player.UpdateChaserStates += modUpdateChaserStates;
@@ -41,13 +43,14 @@ namespace ExtendedVariants.Variants {
             On.Celeste.Lookout.Interact += onWatchtowerInteract;
             On.Celeste.Lookout.LookRoutine += onWatchtowerUse;
             On.Celeste.Player.UpdateChaserStates += onUpdateChaserStates;
+
+            addedHook = new ILHook(typeof(BadelineOldsite).GetMethod("Added"), modBadelineOldsiteAdded);
         }
 
         public override void Unload() {
             IL.Celeste.BadelineOldsite.ctor_Vector2_int -= modBadelineOldsiteConstructor;
             On.Celeste.Level.LoadLevel -= modLoadLevel;
             On.Celeste.Level.TransitionRoutine -= modTransitionRoutine;
-            IL.Celeste.BadelineOldsite.Added -= modBadelineOldsiteAdded;
             IL.Celeste.BadelineOldsite.CanChangeMusic -= modBadelineOldsiteCanChangeMusic;
             On.Celeste.BadelineOldsite.IsChaseEnd -= modBadelineOldsiteIsChaseEnd;
             IL.Celeste.Player.UpdateChaserStates -= modUpdateChaserStates;
@@ -57,6 +60,9 @@ namespace ExtendedVariants.Variants {
             On.Celeste.Lookout.Interact -= onWatchtowerInteract;
             On.Celeste.Lookout.LookRoutine -= onWatchtowerUse;
             On.Celeste.Player.UpdateChaserStates -= onUpdateChaserStates;
+
+            addedHook?.Dispose();
+            addedHook = null;
 
             // this is reset on every room enter. reset that in case we enable variants again mid-level
             lastChaserLag = 0f;
