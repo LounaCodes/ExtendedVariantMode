@@ -13,9 +13,6 @@ using static ExtendedVariants.Module.ExtendedVariantsModule;
 namespace ExtendedVariants.Variants {
     public class BadelineBossesEverywhere : AbstractExtendedVariant {
 
-        private static Random positionRandomizer = new Random();
-        private static Random patternRandomizer = new Random();
-
         public BadelineBossesEverywhere() : base(variantType: typeof(bool), defaultVariantValue: false) { }
 
         public override object ConvertLegacyVariantValue(int value) {
@@ -23,8 +20,7 @@ namespace ExtendedVariants.Variants {
         }
 
         public override void SetRandomSeed(int seed) {
-            positionRandomizer = new Random(seed);
-            patternRandomizer = new Random(seed);
+            Calc.PushRandom(seed);
         }
 
         public override void Load() {
@@ -121,7 +117,7 @@ namespace ExtendedVariants.Variants {
                         bossData.Position = bossPosition;
                         bossData.Values["canChangeMusic"] = false;
                         bossData.Values["cameraLockY"] = false;
-                        bossData.Values["patternIndex"] = GetVariantValue<int>(Variant.BadelineAttackPattern) == 0 ? patternRandomizer.Next(1, 16) : GetVariantValue<int>(Variant.BadelineAttackPattern);
+                        bossData.Values["patternIndex"] = GetVariantValue<int>(Variant.BadelineAttackPattern) == 0 ? Calc.Random.Next(1, 16) : GetVariantValue<int>(Variant.BadelineAttackPattern);
                         bossData.Nodes = nodes;
 
                         // add it to the level!
@@ -162,8 +158,8 @@ namespace ExtendedVariants.Variants {
         private static Vector2 computeBossPositionAtRandom(Level level, Player player) {
             for (int i = 0; i < 100; i++) {
                 // roll a boss position in the room
-                int x = positionRandomizer.Next(level.Bounds.Width) + level.Bounds.X;
-                int y = positionRandomizer.Next(level.Bounds.Height) + level.Bounds.Y;
+                int x = Calc.Random.Next(level.Bounds.Width) + level.Bounds.X;
+                int y = Calc.Random.Next(level.Bounds.Height) + level.Bounds.Y;
 
                 // should be at least 100 pixels from the player
                 double playerDistance = Math.Sqrt(Math.Pow(MathHelper.Distance(x, player.X), 2) + Math.Pow(MathHelper.Distance(y, player.Y), 2));
@@ -213,7 +209,7 @@ namespace ExtendedVariants.Variants {
 
         private static int modAttackPattern(int vanillaPattern) {
             if (GetVariantValue<bool>(Variant.ChangePatternsOfExistingBosses)) {
-                return GetVariantValue<int>(Variant.BadelineAttackPattern) == 0 ? patternRandomizer.Next(1, 16) : GetVariantValue<int>(Variant.BadelineAttackPattern);
+                return GetVariantValue<int>(Variant.BadelineAttackPattern) == 0 ? Calc.Random.Next(1, 16) : GetVariantValue<int>(Variant.BadelineAttackPattern);
             }
             return vanillaPattern;
         }
