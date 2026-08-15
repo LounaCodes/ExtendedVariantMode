@@ -28,7 +28,7 @@ namespace ExtendedVariants.Variants {
         }
 
         public override void Load() {
-            Everest.Events.AssetReload.OnBeforeReload+= setRNGSeed;
+            Everest.Events.LevelLoader.OnLoadingThread += setRNGSeed;
             IL.Celeste.FinalBoss.CanChangeMusic += modCanChangeMusic;
             On.Celeste.Level.LoadLevel += modLoadLevel;
             On.Celeste.Level.TransitionRoutine += modTransitionRoutine;
