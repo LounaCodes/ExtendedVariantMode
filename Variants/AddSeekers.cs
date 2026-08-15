@@ -16,6 +16,7 @@ namespace ExtendedVariants.Variants {
     public class AddSeekers : AbstractExtendedVariant {
 
         private static Random randomGenerator = new Random();
+        
 
         private static bool killSeekerSlowdownToFixHeart = false;
         private static string calcLogPrefix = null;
@@ -34,6 +35,9 @@ namespace ExtendedVariants.Variants {
         }
 
         public override void Load() {
+            // Everest.Events.Level.OnLoadLevel += setRNGSeed;
+            // Everest.Events.Level.OnEnter += setRNGSeed;
+            Everest.Events.AssetReload.OnBeforeReload+= setRNGSeed;
             On.Celeste.Level.LoadLevel += modLoadLevel;
             IL.Celeste.SeekerEffectsController.Update += onSeekerEffectsControllerUpdate;
             On.Celeste.HeartGem.Collect += onHeartGemCollect;
@@ -53,7 +57,10 @@ namespace ExtendedVariants.Variants {
 
             killSeekerSlowdownToFixHeart = false;
         }
-
+        private void setRNGSeed(bool silent) {
+            int seed = GetVariantValue<int>(Variant.SetSeed);
+            SetRandomSeed(seed);
+        }
         private static void modLoadLevel(On.Celeste.Level.orig_LoadLevel orig, Level self, Player.IntroTypes playerIntro, bool isFromLoader) {
             orig(self, playerIntro, isFromLoader);
 

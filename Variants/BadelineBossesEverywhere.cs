@@ -28,10 +28,12 @@ namespace ExtendedVariants.Variants {
         }
 
         public override void Load() {
+            Everest.Events.AssetReload.OnBeforeReload+= setRNGSeed;
             IL.Celeste.FinalBoss.CanChangeMusic += modCanChangeMusic;
             On.Celeste.Level.LoadLevel += modLoadLevel;
             On.Celeste.Level.TransitionRoutine += modTransitionRoutine;
             IL.Celeste.FinalBoss.ctor_Vector2_Vector2Array_int_float_bool_bool_bool += modBadelineBossConstructor;
+            SetRandomSeed(GetVariantValue<int>(Variant.SetSeed));
         }
 
         public override void Unload() {
@@ -39,6 +41,11 @@ namespace ExtendedVariants.Variants {
             On.Celeste.Level.LoadLevel -= modLoadLevel;
             On.Celeste.Level.TransitionRoutine -= modTransitionRoutine;
             IL.Celeste.FinalBoss.ctor_Vector2_Vector2Array_int_float_bool_bool_bool -= modBadelineBossConstructor;
+        }
+
+        private void setRNGSeed(bool silent) {
+            int seed = GetVariantValue<int>(Variant.SetSeed);
+            SetRandomSeed(seed);
         }
 
         private static void modLoadLevel(On.Celeste.Level.orig_LoadLevel orig, Level self, Player.IntroTypes playerIntro, bool isFromLoader) {

@@ -52,6 +52,7 @@ namespace ExtendedVariants.Variants {
             Everest.Events.Level.OnExit += onLevelExit;
 
             IL.Celeste.Wire.Render += onWireRender;
+            SetRandomSeed(GetVariantValue<int>(Variant.SetSeed));
         }
 
         public override void Unload() {
