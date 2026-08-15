@@ -11,7 +11,6 @@ using static ExtendedVariants.Module.ExtendedVariantsModule;
 namespace ExtendedVariants.Variants {
     public class WindEverywhere : AbstractExtendedVariant {
 
-        private static Random randomGenerator = new Random();
 
         private static bool snowBackdropAddedByEVM = false;
 
@@ -43,7 +42,7 @@ namespace ExtendedVariants.Variants {
         }
 
         public override void SetRandomSeed(int seed) {
-            randomGenerator = new Random(seed);
+            Calc.PushRandom(seed);
         }
 
         public override void Load() {
@@ -94,7 +93,7 @@ namespace ExtendedVariants.Variants {
                             WindController.Patterns.RightOnOffFast, WindController.Patterns.Down, WindController.Patterns.Up
                     };
 
-                    selectedPattern = allPatterns[randomGenerator.Next(allPatterns.Length)];
+                    selectedPattern = allPatterns[Calc.Random.Next(allPatterns.Length)];
                 } else {
                     // pick up the chosen wind pattern
                     selectedPattern = (WindController.Patterns) Enum.Parse(typeof(WindController.Patterns),
