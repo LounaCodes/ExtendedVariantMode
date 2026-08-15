@@ -33,7 +33,6 @@ namespace ExtendedVariants.Variants {
             On.Celeste.Level.LoadLevel += modLoadLevel;
             On.Celeste.Level.TransitionRoutine += modTransitionRoutine;
             IL.Celeste.FinalBoss.ctor_Vector2_Vector2Array_int_float_bool_bool_bool += modBadelineBossConstructor;
-            SetRandomSeed(GetVariantValue<int>(Variant.SetSeed));
         }
 
         public override void Unload() {
@@ -43,7 +42,7 @@ namespace ExtendedVariants.Variants {
             IL.Celeste.FinalBoss.ctor_Vector2_Vector2Array_int_float_bool_bool_bool -= modBadelineBossConstructor;
         }
 
-        private void setRNGSeed(bool silent) {
+        private void setRNGSeed(Level level) {
             int seed = GetVariantValue<int>(Variant.SetSeed);
             SetRandomSeed(seed);
         }
