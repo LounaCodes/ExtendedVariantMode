@@ -35,8 +35,6 @@ namespace ExtendedVariants.Variants {
         }
 
         public override void Load() {
-            // Everest.Events.Level.OnLoadLevel += setRNGSeed;
-            // Everest.Events.Level.OnEnter += setRNGSeed;
             Everest.Events.AssetReload.OnBeforeReload+= setRNGSeed;
             On.Celeste.Level.LoadLevel += modLoadLevel;
             IL.Celeste.SeekerEffectsController.Update += onSeekerEffectsControllerUpdate;
