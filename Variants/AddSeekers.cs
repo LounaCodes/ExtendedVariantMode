@@ -35,7 +35,8 @@ namespace ExtendedVariants.Variants {
         }
 
         public override void Load() {
-            Everest.Events.AssetReload.OnBeforeReload+= setRNGSeed;
+            // Set the RNG at the beginning of a level
+            Everest.Events.LevelLoader.OnLoadingThread += setRNGSeed;
             On.Celeste.Level.LoadLevel += modLoadLevel;
             IL.Celeste.SeekerEffectsController.Update += onSeekerEffectsControllerUpdate;
             On.Celeste.HeartGem.Collect += onHeartGemCollect;
@@ -55,7 +56,7 @@ namespace ExtendedVariants.Variants {
 
             killSeekerSlowdownToFixHeart = false;
         }
-        private void setRNGSeed(bool silent) {
+        private void setRNGSeed(Level level) {
             int seed = GetVariantValue<int>(Variant.SetSeed);
             SetRandomSeed(seed);
         }
