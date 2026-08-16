@@ -31,7 +31,7 @@ namespace ExtendedVariants.Variants {
         }
 
         public override void SetRandomSeed(int seed) {
-            randomGenerator = new Random(seed);
+            Calc.PushRandom(seed);
         }
 
         public override void Load() {
@@ -97,8 +97,8 @@ namespace ExtendedVariants.Variants {
 
                     for (int i = 0; i < 100; i++) {
                         // roll a seeker position in the room
-                        int x = randomGenerator.Next(level.Bounds.Width) + level.Bounds.X;
-                        int y = randomGenerator.Next(level.Bounds.Height) + level.Bounds.Y;
+                        int x = Calc.Random.Next(level.Bounds.Width) + level.Bounds.X;
+                        int y = Calc.Random.Next(level.Bounds.Height) + level.Bounds.Y;
 
                         // should be at least 100 pixels from the player
                         double playerDistance = Math.Sqrt(Math.Pow(MathHelper.Distance(x, player.X), 2) + Math.Pow(MathHelper.Distance(y, player.Y), 2));
