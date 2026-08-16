@@ -350,7 +350,7 @@ namespace ExtendedVariants.UI {
 
                 qualityOfLifeSubmenu.GetHighlightColor = () => getColorForVariantSubmenu(new List<Variant> {
                     Variant.UltraProtection, Variant.LiftboostProtection, Variant.CornerboostProtection, Variant.CrouchDashFix, Variant.AlternativeBuffering, Variant.ConsistentThrowing,
-                    Variant.MultiBuffering, Variant.SaferDiagonalSmuggle, Variant.DashBeforePickup, Variant.DashbounceControl, Variant.ThrowIgnoresForcedMove, Variant.SetSeed
+                    Variant.MultiBuffering, Variant.SaferDiagonalSmuggle, Variant.DashBeforePickup, Variant.DashbounceControl, Variant.ThrowIgnoresForcedMove
                 });
 
                 elementsToHideOnToggle = new List<TextMenu.Item>() { resetVanillaVariants, resetExtendedVariants, title, movementSubmenu, gameElementsSubmenu, visualSubmenu, gameplayTweaksSubmenu, qualityOfLifeSubmenu };
