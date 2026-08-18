@@ -13,6 +13,8 @@ using static ExtendedVariants.Module.ExtendedVariantsModule;
 namespace ExtendedVariants.Variants {
     public class BadelineBossesEverywhere : AbstractExtendedVariant {
 
+        private static Random randomGenerator = new Random();
+
         public BadelineBossesEverywhere() : base(variantType: typeof(bool), defaultVariantValue: false) { }
 
         public override object ConvertLegacyVariantValue(int value) {
@@ -20,7 +22,7 @@ namespace ExtendedVariants.Variants {
         }
 
         public override void SetRandomSeed(int seed) {
-            Calc.PushRandom(seed);
+            randomGenerator = new Random(seed);
         }
 
         public override void Load() {

@@ -11,6 +11,7 @@ using static ExtendedVariants.Module.ExtendedVariantsModule;
 namespace ExtendedVariants.Variants {
     public class WindEverywhere : AbstractExtendedVariant {
 
+        private static Random randomGenerator = new Random();
 
         private static bool snowBackdropAddedByEVM = false;
 
@@ -42,7 +43,7 @@ namespace ExtendedVariants.Variants {
         }
 
         public override void SetRandomSeed(int seed) {
-            Calc.PushRandom(seed);
+            randomGenerator = new Random(seed);
         }
 
         public override void Load() {
