@@ -71,7 +71,7 @@ namespace ExtendedVariants.Module {
             CornerboostProtection, CrouchDashFix, AlternativeBuffering, MultiBuffering, SaferDiagonalSmuggle, DashBeforePickup, ThrowIgnoresForcedMove, DashbounceControl, MidairTech,
             NoFreezeFramesAdvanceCassetteBlocks, PreserveWallbounceSpeed, StretchUpDashes, DisableJumpGravityLowering, DisableAutoJumpGravityLowering, UnderwaterSpeedX, UnderwaterSpeedY,
             WaterSurfaceSpeedX, WaterSurfaceSpeedY, LiftboostCapX, LiftboostCapUp, LiftboostCapDown, AutoJump, SlowfallGravityMultiplier, SlowfallSpeedThreshold, AutoDash,
-            ConsistentThrowing, JumpBoost, SetSeed,
+            ConsistentThrowing, JumpBoost, SetSeed, ConsistentRNG,
             ClimbUpSpeed, ClimbDownSpeed, ClimbJumpStaminaCost, ClimbUpStaminaDrainRate, ClimbHoldStaminaDrainRate, HarmlessSeekers, MuteSeekerSounds,
 
             // vanilla variants
@@ -127,6 +127,7 @@ namespace ExtendedVariants.Module {
             VariantHandlers[Variant.BadelineChasersEverywhere] = new BadelineChasersEverywhere();
             VariantHandlers[Variant.ChaserCount] = new ChaserCount();
             VariantHandlers[Variant.SetSeed] = new SetSeed();
+            VariantHandlers[Variant.ConsistentRNG] = new ConsistentRNG();
             VariantHandlers[Variant.AffectExistingChasers] = new AffectExistingChasers();
             VariantHandlers[Variant.BadelineBossesEverywhere] = new BadelineBossesEverywhere();
             VariantHandlers[Variant.BadelineAttackPattern] = new BadelineAttackPattern();

@@ -1,5 +1,3 @@
-using System;
-
 namespace ExtendedVariants.Variants {
     public class SetSeed : AbstractExtendedVariant {
         public SetSeed() : base(variantType: typeof(int), defaultVariantValue: 0) { }

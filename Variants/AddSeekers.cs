@@ -16,6 +16,7 @@ namespace ExtendedVariants.Variants {
     public class AddSeekers : AbstractExtendedVariant {
 
         private static Random randomGenerator = new Random();
+        private static int seedModifier = 0;
 
         private static bool killSeekerSlowdownToFixHeart = false;
         private static string calcLogPrefix = null;
@@ -34,7 +35,7 @@ namespace ExtendedVariants.Variants {
         }
 
         public override void Load() {
-            Everest.Events.LevelLoader.OnLoadingThread += setRNGSeed;
+            Everest.Events.LevelLoader.OnLoadingThread += setSeedModifier;
             On.Celeste.Level.LoadLevel += modLoadLevel;
             IL.Celeste.SeekerEffectsController.Update += onSeekerEffectsControllerUpdate;
             On.Celeste.HeartGem.Collect += onHeartGemCollect;
@@ -55,9 +56,8 @@ namespace ExtendedVariants.Variants {
             killSeekerSlowdownToFixHeart = false;
         }
 
-        private void setRNGSeed(Level level) {
-            int seed = GetVariantValue<int>(Variant.SetSeed);
-            SetRandomSeed(seed);
+        private void setSeedModifier(Level level) {
+            seedModifier = GetVariantValue<int>(Variant.SetSeed);
         }
         private static void modLoadLevel(On.Celeste.Level.orig_LoadLevel orig, Level self, Player.IntroTypes playerIntro, bool isFromLoader) {
             orig(self, playerIntro, isFromLoader);
@@ -66,6 +66,11 @@ namespace ExtendedVariants.Variants {
             killSeekerSlowdownToFixHeart = false;
 
             Level level = self;
+            if (GetVariantValue<bool>(Variant.ConsistentThrowing) == true) {
+                randomGenerator = new Random(level.Bounds.X + level.Bounds.Y + level.Bounds.Width + level.Bounds.Height + seedModifier);
+            }
+            // SetRandomSeed(level.Bounds.X + level.Bounds.Y + level.Bounds.Width + level.Bounds.Height);
+            
             Player player = level.Tracker.GetEntity<Player>();
 
             if (player != null && GetVariantValue<int>(Variant.AddSeekers) != 0) {
